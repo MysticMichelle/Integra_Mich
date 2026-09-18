@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface User {
@@ -14,7 +14,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   logout: () => void;
   updateLastActivity: () => void;
-  checkEncuestaStatus: () => Promise<boolean>;
+  checkEncuestaStatus: (signal?: AbortSignal) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -25,7 +25,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Verificar si hay sesión al cargar
     const checkAuth = async () => {
       try {
         const response = await fetch('/api/auth/check');
@@ -45,7 +44,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     checkAuth();
     
-    // Configurar listener para actualizar actividad en cada interacción
     const events = ['mousedown', 'keydown', 'scroll', 'touchstart'];
     const handleActivity = () => updateLastActivity();
     
@@ -56,42 +54,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [router]);
 
-  const updateLastActivity = () => {
-    // Actualizar cookie de última actividad
+  const updateLastActivity = useCallback(() => {
     document.cookie = `last_activity=${Date.now()}; path=/; max-age=600; SameSite=Strict`;
-  };
+  }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }
-    
     setUser(null);
     setIsAuthenticated(false);
     router.push('/');
-  };
+  }, [router]);
 
-  const checkEncuestaStatus = async (): Promise<boolean> => {
+  // 👇 CLAVE: useCallback + AbortSignal para evitar doble petición en Strict Mode
+  const checkEncuestaStatus = useCallback(async (signal?: AbortSignal): Promise<boolean> => {
     if (!user) return false;
     
     try {
-      const response = await fetch('/api/encuesta-status');
+      const response = await fetch('/api/encuesta-status', { signal });
+      
+      // Si la petición fue abortada, no intentamos parsear el JSON
+      if (response.status === 0 || !response.ok) return false;
+      
       const data = await response.json();
       
       if (data.ok === 'SI') {
-        // Actualizar estado local
         setUser(prev => prev ? { ...prev, encuesta_realizada: data.encuesta_realizada } : null);
         return data.encuesta_realizada === 'si';
       }
-      
       return false;
-    } catch (error) {
+    } catch (error: any) {
+      if (error.name === 'AbortError') return false; // Ignorar cancelación intencional
       console.error('Error al verificar encuesta:', error);
       return false;
     }
-  };
+  }, [user]); // Solo se recrea si 'user' cambia
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, logout, updateLastActivity, checkEncuestaStatus }}>

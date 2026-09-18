@@ -1,26 +1,215 @@
-body.dashboard-layout { overflow-x: hidden; background-color: #f8f9fa; }
-body.dashboard-layout.fixed-nav { padding-top: 56px; }
-body.dashboard-layout.sticky-footer { margin-bottom: 56px; }
-body.dashboard-layout.sticky-footer .content-wrapper { min-height: calc(100vh - 56px - 56px); }
-#mainNav { position: fixed; top: 0; left: 0; right: 0; z-index: 1030; background-color: #343a40 !important; }
+/* =========================================
+   1. ESTRUCTURA BASE Y LAYOUT
+   ========================================= */
+body {
+  overflow-x: hidden;
+  background-color: #f8f9fa;
+}
+
+/* Ajustado para funcionar con el div wrapper de Next.js, no solo con el body */
+.fixed-nav { padding-top: 56px; }
+.sticky-footer { margin-bottom: 56px; }
+.sticky-footer .content-wrapper { 
+  min-height: calc(100vh - 56px - 56px); 
+}
+
+#mainNav { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  z-index: 1030; 
+  background-color: #343a40 !important; 
+}
 #mainNav .navbar-brand { padding: 0.5rem 1rem; }
 #mainNav .navbar-brand img { max-height: 40px; }
-.content-wrapper { min-height: calc(100vh - 56px); padding-top: 1rem; background: white; overflow-x: hidden; }
-@media (min-width: 992px) { .content-wrapper { margin-left: 250px; } }
-.navbar-sidenav { width: 250px; background-color: #343a40; position: fixed; top: 56px; left: 0; bottom: 0; overflow-y: auto; padding: 0; list-style: none; z-index: 1020; }
+
+.content-wrapper { 
+  min-height: calc(100vh - 56px); 
+  padding-top: 1rem; 
+  background: white; 
+  overflow-x: hidden; 
+}
+@media (min-width: 992px) { 
+  .content-wrapper { margin-left: 250px; } 
+}
+
+/* =========================================
+   2. SIDEBAR (NAVBAR-SIDENAV)
+   ========================================= */
+.navbar-sidenav { 
+  width: 250px; 
+  background-color: #343a40; 
+  position: fixed; 
+  top: 56px; 
+  left: 0; 
+  bottom: 0; 
+  overflow-y: auto; 
+  padding: 0; 
+  list-style: none; 
+  z-index: 1020; 
+  /* Scrollbar personalizada para que se vea profesional */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) #343a40;
+}
+.navbar-sidenav::-webkit-scrollbar { width: 6px; }
+.navbar-sidenav::-webkit-scrollbar-track { background: #343a40; }
+.navbar-sidenav::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.2); border-radius: 3px; }
+
 .navbar-sidenav li { width: 100%; }
-.navbar-sidenav .nav-link { color: rgba(255,255,255,.5) !important; padding: .75rem 1rem; display: block; text-decoration: none; }
-.navbar-sidenav .nav-link:hover, .navbar-sidenav .nav-link.active { color: #fff !important; background-color: #1C3D6C; }
-.navbar-sidenav ul { list-style: none; padding-left: 0; background-color: #343a40; }
-.navbar-sidenav ul li a { padding-left: 2rem; font-size: .9rem; }
-.navbar-sidenav ul li a:hover { background-color: #A48329 !important; color: white !important; }
-footer.sticky-footer { position: absolute; right: 0; bottom: 0; width: 100%; height: 56px; background-color: #e9ecef; display: flex; align-items: center; padding: 0 1rem; }
-@media (min-width: 992px) { footer.sticky-footer { width: calc(100% - 250px); } }
-.encuesta-alert-btn { background-color: #ffc107; color: #212529; border: none; padding: .25rem .75rem; border-radius: .25rem; font-size: .875rem; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: .5rem; }
-.encuesta-alert-btn:hover { background-color: #e0a800; color: #212529; text-decoration: none; }
+.navbar-sidenav .nav-link { 
+  color: rgba(255,255,255,.5) !important; 
+  padding: .75rem 1rem; 
+  display: block; 
+  text-decoration: none; 
+}
+.navbar-sidenav .nav-link:hover, 
+.navbar-sidenav .nav-link.active { 
+  color: #fff !important; 
+  background-color: #1C3D6C; 
+}
+.navbar-sidenav ul { 
+  list-style: none; 
+  padding-left: 0; 
+  background-color: #343a40; 
+}
+.navbar-sidenav ul li a { 
+  padding-left: 2rem; 
+  font-size: .9rem; 
+}
+.navbar-sidenav ul li a:hover { 
+  background-color: #A48329 !important; 
+  color: white !important; 
+}
+
+/* =========================================
+   3. FOOTER
+   ========================================= */
+footer.sticky-footer { 
+  position: absolute; 
+  right: 0; 
+  bottom: 0; 
+  width: 100%; 
+  height: 56px; 
+  background-color: #e9ecef; 
+  display: flex; 
+  align-items: center; 
+  padding: 0 1rem; 
+}
+@media (min-width: 992px) { 
+  footer.sticky-footer { width: calc(100% - 250px); } 
+}
+
+/* =========================================
+   4. COMPONENTES DE UI (Botones, User Info)
+   ========================================= */
+.encuesta-alert-btn { 
+  background-color: #ffc107; 
+  color: #212529; 
+  border: none; 
+  padding: .25rem .75rem; 
+  border-radius: .25rem; 
+  font-size: .875rem; 
+  font-weight: 500; 
+  text-decoration: none; 
+  display: inline-flex; 
+  align-items: center; 
+  gap: .5rem; 
+}
+.encuesta-alert-btn:hover { 
+  background-color: #e0a800; 
+  color: #212529; 
+  text-decoration: none; 
+}
+
 .navbar-top-right { display: flex; align-items: center; gap: 1rem; }
-.navbar-top-right .nav-link { color: rgba(255,255,255,.75) !important; padding: .5rem .75rem; text-decoration: none; font-size: .9rem; }
+.navbar-top-right .nav-link { 
+  color: rgba(255,255,255,.75) !important; 
+  padding: .5rem .75rem; 
+  text-decoration: none; 
+  font-size: .9rem; 
+}
 .navbar-top-right .nav-link:hover { color: #fff; text-decoration: none; }
+
 .user-info { color: rgba(255,255,255,.75); font-size: .9rem; padding: .5rem 1rem; }
 .user-info i { margin-right: .5rem; }
-@media (max-width: 991px) { .navbar-sidenav { display: none; } .navbar-sidenav.show { display: block; position: fixed; top: 56px; left: 0; bottom: 0; width: 250px; z-index: 1020; } .content-wrapper { margin-left: 0; } footer.sticky-footer { width: 100%; } }
+
+/* =========================================
+   5. TOGGLER Y OVERLAY (Corregido)
+   ========================================= */
+.sidenav-toggler {
+  display: none !important;
+}
+@media (max-width: 991px){ 
+    .sidenav-toggler {
+  position: absolute;
+  left: 250px;
+  top: 56px;
+  z-index: 1019;
+  background-color: #343a40;
+  border-radius: 0 4px 4px 0;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  transition: left 0.3s ease;
+}
+.sidenav-toggler a {
+  color: rgba(255, 255, 255, 0.5) !important;
+  text-decoration: none;
+  display: block;
+}
+}
+.sidenav-toggler a:hover { color: #fff !important; }
+
+/* Estado: Sidebar cerrado */
+.sidenav-toggled .sidenav-toggler { left: 0; }
+.sidenav-toggled .content-wrapper { margin-left: 0 !important; }
+.sidenav-toggled .navbar-sidenav {
+  width: 0;
+  overflow: hidden;
+}
+
+.sidenav-overlay {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1019;
+  cursor: pointer;
+}
+.sidenav-overlay.show { display: block; }
+
+/* =========================================
+   6. RESPONSIVE (Consolidado y sin conflictos)
+   ========================================= */
+@media (max-width: 991px) {
+  /* Usamos transform en lugar de display:none para permitir animaciones suaves */
+  .navbar-sidenav {
+    width: 250px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  .navbar-sidenav.show {
+    transform: translateX(0);
+  }
+  .content-wrapper { margin-left: 0 !important; }
+  footer.sticky-footer { width: 100% !important; margin-left: 0 !important; }
+  
+  /* En móvil, el toggler siempre está visible en el borde */
+  .sidenav-toggler { left: 0; border-radius: 0; }
+}
+
+/* =========================================
+   7. ACORDEÓN / SUBMENÚ
+   ========================================= */
+.navbar-sidenav .over-link { transition: all 0.3s ease; }
+.navbar-sidenav .nav-link.titsubtext {
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.navbar-sidenav .nav-link.titsubtext .fa-angle-down { transition: transform 0.3s ease; }
+.navbar-sidenav .nav-link.titsubtext[aria-expanded="true"] .fa-angle-down {
+  transform: rotate(180deg);
+}

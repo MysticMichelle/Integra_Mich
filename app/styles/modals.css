@@ -6,8 +6,9 @@
   display: none;
   width: 100% !important;
   height: 100vh !important;
+  height: 100dvh !important;
   overflow-x: hidden !important;
-  overflow-y: auto !important; /* 👈 El modal es el que scrollea */
+  overflow-y: hidden !important;
   outline: 0 !important;
   -webkit-overflow-scrolling: touch;
   background-color: rgba(0, 0, 0, 0.5);
@@ -40,7 +41,9 @@
 }
 
 .modal-dialog-scrollable .modal-content {
-  max-height: none !important;
+  max-height: calc(100vh - 3.5rem) !important;
+  max-height: calc(100dvh - 3.5rem) !important;
+  overflow: hidden !important;
 }
 
 .modal-content {
@@ -71,7 +74,9 @@
   flex: 1 1 auto !important;
   padding: 1.5rem !important;
   padding-bottom: 2rem !important;
-  overflow: visible !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-body p {
@@ -99,6 +104,10 @@
   .modal-vertical .modal-dialog {
     margin: 0.5rem;
     max-width: calc(100% - 1rem);
+  }
+  .modal-dialog-scrollable .modal-content {
+    max-height: calc(100vh - 1rem) !important;
+    max-height: calc(100dvh - 1rem) !important;
   }
   .main-container { padding: 3rem 1rem; }
 }
