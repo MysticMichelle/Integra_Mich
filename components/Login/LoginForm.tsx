@@ -169,7 +169,7 @@ export default function LoginForm({ onLogin, loading }: Props) {
         </form>
 
         <div className="text-center mt-3">
-          <a className="d-block small mb-2" href="/estudiantes/registro">Registrarse</a>
+          <a className="d-block small mb-2" href="/configuracion/registro">Registrarse</a>
           <a className="d-block small" href="/configuracion/RecuperaPassword">Recuperar contraseña</a>
         </div>
 
