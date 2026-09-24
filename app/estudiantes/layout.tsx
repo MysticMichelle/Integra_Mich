@@ -33,9 +33,9 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   }, [user, encuestaChecked, checkEncuestaStatus]);
 
   const menuItems = [
-    { name: 'Tutorías', href: '/responsables/Tutoria' },
-    { name: 'Preguntas Frecuentes', href: '/administrativos/PreguntasFrecuentes' },
-    { name: 'Scotiabank Tutorias', href: '/administrativos/AdmScotianbank' },
+    { name: 'Tutorías', href: '/estudiantes/Tutoria' },
+    { name: 'Preguntas Frecuentes', href: '/estudiantes/PreguntasFrecuentes' },
+    { name: 'Scotiabank Tutorias', href: '/estudiantes/AdmScotianbank' },
     { name: 'Datos Personales', href: '/estudiantes/Personales' },
     { name: 'Mensajes', href: '/estudiantes/Mensajes' },
     { name: 'Solicitudes', href: '/estudiantes/Solicitudes' },

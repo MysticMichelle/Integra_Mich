@@ -1,8 +1,10 @@
 'use client';
+import ResetErrorCounter from '@/components/EasterEgg/ResetErrorCounter';
 
 export default function EstudiantesPage() {
   return (
     <>
+      <ResetErrorCounter />
       <div className="row">
         <div className="col-12">
           <div style={{ marginTop: '2rem' }}> <p></p></div>

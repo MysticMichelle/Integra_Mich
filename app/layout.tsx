@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Integra 2026 - DGOAE',
-  description: 'Sistema Integra - Dirección General de Orientación y Atención Educativa UNAM',
+  title: 'Integrate 2026 - DGOAE',
+  description: 'Sistema Integrate - Dirección General de Orientación y Atención Educativa UNAM',
 };
 
 export default function RootLayout({
