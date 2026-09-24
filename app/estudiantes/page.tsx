@@ -5,13 +5,7 @@ export default function EstudiantesPage() {
     <>
       <div className="row">
         <div className="col-12">
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;</p>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-12">
+          <div style={{ marginTop: '2rem' }}> <p></p></div>
           <img src="/images/Logo_Integra.png" alt="Integra 2018" className="img-fluid" width="20%" />
           <h3>
             Plataforma Tecnológica en donde se integran los servicios que ofrece la 

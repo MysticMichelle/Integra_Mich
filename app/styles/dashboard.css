@@ -3,15 +3,20 @@
    ========================================= */
 body {
   overflow-x: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
   background-color: #f8f9fa;
 }
 
-/* Ajustado para funcionar con el div wrapper de Next.js, no solo con el body */
-.fixed-nav { padding-top: 56px; }
-.sticky-footer { margin-bottom: 56px; }
-.sticky-footer .content-wrapper { 
-  min-height: calc(100vh - 56px - 56px); 
+.main-layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fa;
 }
+
+.fixed-nav { padding-top: 56px; }
 
 #mainNav { 
   position: fixed; 
@@ -20,22 +25,22 @@ body {
   right: 0; 
   z-index: 1030; 
   background-color: #343a40 !important; 
+  min-height: 56px;
 }
-#mainNav .navbar-brand { padding: 0.5rem 1rem; }
+#mainNav .navbar-brand { padding: 0.75rem 1rem; }
 #mainNav .navbar-brand img { max-height: 40px; }
 
 .content-wrapper { 
-  min-height: calc(100vh - 56px); 
+  flex: 1; 
   padding-top: 1rem; 
+  padding-bottom: 56px; 
   background: white; 
   overflow-x: hidden; 
-}
-@media (min-width: 992px) { 
-  .content-wrapper { margin-left: 250px; } 
+  position: relative;
 }
 
 /* =========================================
-   2. SIDEBAR (NAVBAR-SIDENAV)
+   2. SIDEBAR (Escritorio)
    ========================================= */
 .navbar-sidenav { 
   width: 250px; 
@@ -45,166 +50,156 @@ body {
   left: 0; 
   bottom: 0; 
   overflow-y: auto; 
-  padding: 0; 
+  padding-top: 1rem; /* 👈 ESPACIO AGREGADO: Separa el menú del borde superior */
+  padding-bottom: 3rem; /* Espacio para que el botón de minimizar no quede pegado al fondo */
   list-style: none; 
   z-index: 1020; 
-  /* Scrollbar personalizada para que se vea profesional */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.2) #343a40;
+  transition: width 0.3s ease;
 }
-.navbar-sidenav::-webkit-scrollbar { width: 6px; }
-.navbar-sidenav::-webkit-scrollbar-track { background: #343a40; }
-.navbar-sidenav::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.2); border-radius: 3px; }
 
-.navbar-sidenav li { width: 100%; }
+/* 👈 COLOR DE ENLACES DEL MENÚ ACTUALIZADO */
 .navbar-sidenav .nav-link { 
-  color: rgba(255,255,255,.5) !important; 
-  padding: .75rem 1rem; 
+  color: rgba(255, 255, 255, 0.5) !important; 
+  padding: 0.6rem 1rem; 
   display: block; 
   text-decoration: none; 
+  transition: color 0.2s, background-color 0.2s;
 }
+
 .navbar-sidenav .nav-link:hover, 
 .navbar-sidenav .nav-link.active { 
   color: #fff !important; 
   background-color: #1C3D6C; 
 }
-.navbar-sidenav ul { 
-  list-style: none; 
-  padding-left: 0; 
-  background-color: #343a40; 
+
+/* Botón de minimizar (Hasta abajo del menú, solo escritorio) */
+.sidenav-toggler-desktop {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1d1d1db6;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: none;
 }
-.navbar-sidenav ul li a { 
-  padding-left: 2rem; 
-  font-size: .9rem; 
+.sidenav-toggler-desktop a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  color: rgba(255,255,255,0.5) !important;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s;
 }
-.navbar-sidenav ul li a:hover { 
-  background-color: #A48329 !important; 
-  color: white !important; 
+.sidenav-toggler-desktop a:hover {
+  color: #fff !important;
+  background-color: rgba(255,255,255,0.1);
+}
+
+@media (min-width: 992px) {
+  .content-wrapper { margin-left: 250px; }
+  .sidenav-toggler-desktop { display: block; }
+  
+  .sidenav-toggled .navbar-sidenav { width: 0; overflow: hidden; }
+  .sidenav-toggled .content-wrapper { margin-left: 0 !important; }
 }
 
 /* =========================================
-   3. FOOTER
+   3. FOOTER (Pegado al final sin espacios)
    ========================================= */
 footer.sticky-footer { 
-  position: absolute; 
-  right: 0; 
-  bottom: 0; 
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%; 
   height: 56px; 
   background-color: #e9ecef; 
   display: flex; 
   align-items: center; 
   padding: 0 1rem; 
+  z-index: 1010;
 }
+
 @media (min-width: 992px) { 
-  footer.sticky-footer { width: calc(100% - 250px); } 
+  footer.sticky-footer { 
+    left: 250px;
+    width: calc(100% - 250px); 
+  }
+  .sidenav-toggled footer.sticky-footer {
+    left: 0 !important;
+    width: 100% !important;
+  }
 }
 
 /* =========================================
-   4. COMPONENTES DE UI (Botones, User Info)
-   ========================================= */
-.encuesta-alert-btn { 
-  background-color: #ffc107; 
-  color: #212529; 
-  border: none; 
-  padding: .25rem .75rem; 
-  border-radius: .25rem; 
-  font-size: .875rem; 
-  font-weight: 500; 
-  text-decoration: none; 
-  display: inline-flex; 
-  align-items: center; 
-  gap: .5rem; 
-}
-.encuesta-alert-btn:hover { 
-  background-color: #e0a800; 
-  color: #212529; 
-  text-decoration: none; 
-}
-
-.navbar-top-right { display: flex; align-items: center; gap: 1rem; }
-.navbar-top-right .nav-link { 
-  color: rgba(255,255,255,.75) !important; 
-  padding: .5rem .75rem; 
-  text-decoration: none; 
-  font-size: .9rem; 
-}
-.navbar-top-right .nav-link:hover { color: #fff; text-decoration: none; }
-
-.user-info { color: rgba(255,255,255,.75); font-size: .9rem; padding: .5rem 1rem; }
-.user-info i { margin-right: .5rem; }
-
-/* =========================================
-   5. TOGGLER Y OVERLAY (Corregido)
-   ========================================= */
-.sidenav-toggler {
-  display: none !important;
-}
-@media (max-width: 991px){ 
-    .sidenav-toggler {
-  position: absolute;
-  left: 250px;
-  top: 56px;
-  z-index: 1019;
-  background-color: #343a40;
-  border-radius: 0 4px 4px 0;
-  padding: 0.5rem 0.8rem;
-  cursor: pointer;
-  transition: left 0.3s ease;
-}
-.sidenav-toggler a {
-  color: rgba(255, 255, 255, 0.5) !important;
-  text-decoration: none;
-  display: block;
-}
-}
-.sidenav-toggler a:hover { color: #fff !important; }
-
-/* Estado: Sidebar cerrado */
-.sidenav-toggled .sidenav-toggler { left: 0; }
-.sidenav-toggled .content-wrapper { margin-left: 0 !important; }
-.sidenav-toggled .navbar-sidenav {
-  width: 0;
-  overflow: hidden;
-}
-
-.sidenav-overlay {
-  display: none;
-  position: fixed;
-  top: 56px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1019;
-  cursor: pointer;
-}
-.sidenav-overlay.show { display: block; }
-
-/* =========================================
-   6. RESPONSIVE (Consolidado y sin conflictos)
+   4. MENÚ MÓVIL
    ========================================= */
 @media (max-width: 991px) {
-  /* Usamos transform en lugar de display:none para permitir animaciones suaves */
   .navbar-sidenav {
-    width: 250px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    z-index: 1019;
+    bottom: auto;
+    padding-top: 0;
   }
-  .navbar-sidenav.show {
-    transform: translateX(0);
-  }
-  .content-wrapper { margin-left: 0 !important; }
-  footer.sticky-footer { width: 100% !important; margin-left: 0 !important; }
   
-  /* En móvil, el toggler siempre está visible en el borde */
-  .sidenav-toggler { left: 0; border-radius: 0; }
+  .navbar-sidenav.show {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .content-wrapper { margin-left: 0 !important; padding-bottom: 56px; }
+  .navbar-toggler { display: block !important; }
+  .sidenav-toggler-desktop { display: none !important; }
+}
+
+@media (min-width: 992px) {
+  .navbar-toggler { display: none !important; }
+  .navbar-sidenav { max-height: none; }
 }
 
 /* =========================================
-   7. ACORDEÓN / SUBMENÚ
+   5. COMPONENTES DE UI
    ========================================= */
-.navbar-sidenav .over-link { transition: all 0.3s ease; }
+.encuesta-alert-btn { 
+  background-color: #ffc107; color: #212529; border: none; 
+  padding: 0.25rem 0.75rem; border-radius: 0.25rem; 
+  font-size: 1rem; font-weight: 500; text-decoration: none; 
+  display: inline-flex; align-items: center; gap: 0.5rem; 
+  white-space: nowrap;
+}
+.encuesta-alert-btn:hover { background-color: #e0a800; color: #212529; text-decoration: none; }
+
+.user-info { color: rgba(255, 255, 255, 0.5);  font-size: 1rem; padding: 0.5rem 1rem;}
+.user-info i { margin-right: 0.5rem; }
+
+.navbar-top-right { display: flex; align-items: center; gap: 0.5rem; }
+.navbar-top-right .nav-link { 
+  color: rgba(255, 255, 255, 0.5) !important; 
+  padding: 0.5rem 0.75rem; 
+  text-decoration: none; 
+  font-size: 1rem; 
+}
+.navbar-top-right .nav-link:hover { color: #fff !important; text-decoration: none; }
+
+/* =========================================
+   6. ACORDEÓN / SUBMENÚ
+   ========================================= */
+.navbar-sidenav .over-link { 
+  transition: all 0.3s ease; 
+  max-height: 0;
+  overflow: hidden;
+}
+.navbar-sidenav .over-link.show {
+  max-height: 1000px;
+}
 .navbar-sidenav .nav-link.titsubtext {
   font-weight: 600;
   border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -212,4 +207,9 @@ footer.sticky-footer {
 .navbar-sidenav .nav-link.titsubtext .fa-angle-down { transition: transform 0.3s ease; }
 .navbar-sidenav .nav-link.titsubtext[aria-expanded="true"] .fa-angle-down {
   transform: rotate(180deg);
+}
+.navbar-sidenav ul { list-style: none; padding-left: 0; background-color: #343a40; }
+.navbar-sidenav ul li a { padding-left: 2rem; font-size: 0.9rem; }
+.navbar-sidenav ul li a:hover, .navbar-sidenav .nav-link.active { 
+  background-color: #A48329 !important;color: rgba(255, 255, 255, 0.5) !important; 
 }

@@ -231,7 +231,7 @@ export default function RegistroPage() {
                   <label htmlFor="contrasena">
                     Contraseña: <span className="required">*</span>
                   </label>
-                  <div className="input-group">
+                  <div className="input-group password-field">
                     <input
                       type={showPassword1 ? 'text' : 'password'}
                       className="form-control form-control-sm"
@@ -242,22 +242,22 @@ export default function RegistroPage() {
                       placeholder="**********"
                       required
                     />
-                    <div className="input-group-append">
-                      <span
-                        className="input-group-text tooltip-custom cursor-pointer"
-                        data-tooltip="Mostrar / Ocultar contraseña"
-                        onClick={() => setShowPassword1(!showPassword1)}
-                      >
-                        <i className={`fa ${showPassword1 ? 'fa-eye-slash' : 'fa-eye'}`}></i>
-                      </span>
-                    </div>
+                    <button
+                      type="button"
+                      className="input-group-text tooltip-custom"
+                      aria-label={showPassword1 ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                      data-tooltip="Mostrar / Ocultar contraseña"
+                      onClick={() => setShowPassword1(!showPassword1)}
+                    >
+                      <i className={`fa ${showPassword1 ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                    </button>
                   </div>
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="confirmarContrasena">
                     Confirmar contraseña: <span className="required">*</span>
                   </label>
-                  <div className="input-group">
+                  <div className="input-group password-field">
                     <input
                       type={showPassword2 ? 'text' : 'password'}
                       className="form-control form-control-sm"
@@ -268,15 +268,15 @@ export default function RegistroPage() {
                       placeholder="**********"
                       required
                     />
-                    <div className="input-group-append">
-                      <span
-                        className="input-group-text tooltip-custom cursor-pointer"
-                        data-tooltip="Mostrar / Ocultar contraseña"
-                        onClick={() => setShowPassword2(!showPassword2)}
-                      >
-                        <i className={`fa ${showPassword2 ? 'fa-eye-slash' : 'fa-eye'}`}></i>
-                      </span>
-                    </div>
+                    <button
+                      type="button"
+                      className="input-group-text tooltip-custom"
+                      aria-label={showPassword2 ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                      data-tooltip="Mostrar / Ocultar contraseña"
+                      onClick={() => setShowPassword2(!showPassword2)}
+                    >
+                      <i className={`fa ${showPassword2 ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                    </button>
                   </div>
                 </div>
               </div>

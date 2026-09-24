@@ -111,15 +111,15 @@ export default function LoginForm({ onLogin, loading }: Props) {
                 onChange={(e) => setPass(e.target.value)}
                 required
               />
-              <div className="input-group-append">
-                <span 
-                  className="input-group-text tooltip-custom cursor-pointer"
-                  data-tooltip="Mostrar / Ocultar contraseña"
-                  onClick={() => setShowPass(!showPass)}
-                >
-                  <i className={`fa ${showPass ? 'fa-eye-slash' : 'fa-eye'}`}></i>
-                </span>
-              </div>
+              <button
+                type="button"
+                className="input-group-text tooltip-custom"
+                aria-label={showPass ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                data-tooltip="Mostrar / Ocultar contraseña"
+                onClick={() => setShowPass(!showPass)}
+              >
+                <i className={`fa ${showPass ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+              </button>
             </div>
           </div>
           
